@@ -1,0 +1,134 @@
+/* Common CSS styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(55deg, rgb(2, 218, 251), rgb(230, 2, 230));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 500px; /* Adjust the width of the form */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  input,
+  select,
+  textarea,
+  button {
+    width: calc(100% - 22px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    appearance: none;
+    background: #ffffff;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg%20xmlns%3d%27http%3a//www.w3.org/2000/svg%27%20viewBox%3d%270%200%2024%2024%27%20width%3d%2724%27%20height%3d%2724%27%3e%3cpath%20fill%3d%27%23333%27%20d%3d%27M7%2010l5%205%205-5z%27/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #9b59b6;
+    outline: none;
+  }
+  
+  textarea {
+    resize: none;
+    height: 100px;
+  }
+  
+  button {
+    background: linear-gradient(55deg, rgb(2, 218, 251), rgb(230, 2, 230));
+    border-radius: 50px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background: linear-gradient(55deg, rgb(230, 2, 230), rgb(2, 218, 251));
+    transform: scale(1.05);
+  }
+  
+  a {
+    color: #9b59b6;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #71b7e6;
+  }
+  
+  /* New styles for Employer Dashboard */
+  .notification-container {
+    width: 100%; /* Double the width */
+  }
+  
+  .notification-card {
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; 
+    max-width: calc(100% * 2);
+  }
+  
+  .message {
+    margin: 0;
+    color: #333;
+    width: calc(100% - 150px); /* Adjust width */
+  }
+  
+  .action-button {
+    background: linear-gradient(55deg, rgb(2, 218, 251), rgb(230, 2, 230));
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    width: 100px; /* Adjust width */
+  }
+  
+  .action-button:hover {
+    background: linear-gradient(55deg, rgb(230, 2, 230), rgb(2, 218, 251));
+    transform: scale(1.05);
+  }
+  
+  .logout-button {
+    width: 120px; /* Adjust the width of the logout button */
+  }
+  
