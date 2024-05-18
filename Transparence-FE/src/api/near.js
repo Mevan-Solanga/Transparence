@@ -2,6 +2,9 @@ import nearAPI from 'near-api-js';
 
 // Initialize an in-memory key store
 const myKeyStore = new nearAPI.keyStores.InMemoryKeyStore();
+const fire_name = 'mevan';
+const fire_id = '125436789';
+const fire_company = 'facebook';
 
 // Example usage:
 async function initNEAR() {
@@ -45,10 +48,19 @@ async function initNEAR() {
           console.log("User is not signed in");
         }
         // gets account details in terms of authorized apps and transactions
-const account = await nearConnection.account("example-account.testnet");
-const accid = await account.state();
+        const account = await nearConnection.account("example-account.testnet");
+        let accid = await account.state();
 
-console.log('Wallet sdfvd ID:', accid); 
+        // Add custom properties to accid object
+        accid.fire_name = fire_name;
+        accid.fire_id = fire_id;
+        accid.fire_company = fire_company;
+
+        // Remove unwanted properties
+        delete accid.amount;
+        delete accid.code_hash;
+
+        console.log('Wallet sdfvd ID:', accid); 
 
         return { near, wallet };
     } catch (error) {
@@ -57,7 +69,6 @@ console.log('Wallet sdfvd ID:', accid);
     }
 }
 
-// Example usage:
 async function example() {
     try {
         console.log('Initializing NEAR...');
@@ -70,4 +81,4 @@ async function example() {
     }
 }
 
-example(); // Call the example function
+example(); 
