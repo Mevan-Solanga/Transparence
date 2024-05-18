@@ -15,16 +15,38 @@ const EmployerDashboard = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
+  const [companyName, setCompanyName] = useState("");
+
+  useEffect(() => {
+    const fetchCompanyName = async () => {
+      try {
+        // Fetch the employer's company name from the user's document
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userData = userDoc.data();
+        if (userData && userData.companyName) {
+          setCompanyName(userData.companyName);
+        } else {
+          console.error("Company name not found for the user");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchCompanyName();
+  }, [user.uid]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      try {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const companyId = userDoc.data().companyId;
+      if (!user.uid) {
+        return;
+      }
 
+      try {
+        // Query notifications for the employer's company
         const q = query(
           collection(db, "notifications"),
-          where("companyId", "==", companyId)
+          where("companyId", "==", user.uid)
         );
         const querySnapshot = await getDocs(q);
         const notificationsList = querySnapshot.docs.map((doc) => ({
@@ -38,7 +60,9 @@ const EmployerDashboard = () => {
     };
 
     fetchNotifications();
-  }, [user.uid]);
+  }, [companyName]);
+
+  console.log(notifications);
 
   const handleLogout = async () => {
     try {
