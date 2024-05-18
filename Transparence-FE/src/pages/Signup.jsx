@@ -1,6 +1,6 @@
 import { useAuth } from "../context/auth-context";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -21,28 +21,31 @@ const Signup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-        placeholder="Password"
-      />
-      <select value={role} onChange={(e) => setRole(e.target.value)} required>
-        <option value="">Select Role</option>
-        <option value="Company">Company</option>
-        <option value="Applicant">Applicant</option>
-      </select>
-      <button type="submit">Sign Up</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder="Password"
+        />
+        <select value={role} onChange={(e) => setRole(e.target.value)} required>
+          <option value="">Select Role</option>
+          <option value="Company">Company</option>
+          <option value="Applicant">Applicant</option>
+        </select>
+        <button type="submit">Sign Up</button>
+      </form>
+      <Link to={"/"}>To Login</Link>
+    </>
   );
 };
 
