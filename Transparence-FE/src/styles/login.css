@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(55deg, rgb(2, 218, 251), rgb(255, 31, 255));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    transition: color 2.3s ease, transform 2.3s ease;
+  }
+  
+  form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  button {
+    border-radius: 50px;
+  }
+  
+  input, select, button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    appearance: none;
+    background: #ffffff;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg%20xmlns%3d%27http%3a//www.w3.org/2000/svg%27%20viewBox%3d%270%200%2024%2024%27%20width%3d%2724%27%20height%3d%2724%27%3e%3cpath%20fill%3d%27%23333%27%20d%3d%27M7%2010l5%205%205-5z%27/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color 2.3s ease, background-color 2.3s ease;
+  }
+  
+  input:focus, select:focus {
+    border-color: #9b59b6;
+    outline: none;
+  }
+  
+  button {
+    background: linear-gradient(55deg, rgb(2, 218, 251), rgb(230, 2, 230));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 2.3s ease, transform 2.3s ease;
+  }
+  
+  button:hover {
+    background: linear-gradient(55deg, rgb(230, 2, 230), rgb(2, 218, 251));
+    transform: scale(1.05);
+  }
+  
+  a {
+    color: #9b59b6;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 2.3s ease;
+  }
+  
+  a:hover {
+    color: #71b7e6;
+  }
+  
