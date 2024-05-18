@@ -10,6 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import "../styles/employeer.css";
 
 const EmployerDashboard = () => {
   const { logout, user } = useAuth();
@@ -79,21 +80,21 @@ const EmployerDashboard = () => {
   };
 
   return (
-    <div>
-      <h1>Employer Dashboard</h1>
-      <button onClick={handleLogout}>Logout</button>
-      <h2>Notifications</h2>
-      {notifications.map((notification) => (
-        <div
-          key={notification.id}
-          style={{ border: "1px solid black", margin: "10px", padding: "10px" }}
-        >
-          <p>{notification.message}</p>
-          <button onClick={() => handleAction(notification.id)}>
-            Take Action
-          </button>
+    <div className="dashboard-container">
+      <form className="dashboard-form">
+        <h1>Employer Portal</h1>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
+        <div className="notifications-container">
+          {notifications.map((notification) => (
+            <div key={notification.id} className="notification-card">
+              <p className="message">{notification.message}</p>
+              <button className="action-button" onClick={() => handleAction(notification.id)}>
+                Take Action
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
+      </form>
     </div>
   );
 };
