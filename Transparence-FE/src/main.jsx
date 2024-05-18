@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
+import DashboardEmployee from "./pages/DashboardEmployee";
+import DashboardEmployer from "./pages/DashboardEmployer";
 import { AuthProvider } from "./context/auth-context";
 
 const router = createBrowserRouter([
@@ -16,8 +17,12 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />,
+    path: "/dashboardApplicant",
+    element: <DashboardEmployee />,
+  },
+  {
+    path: "/dashboardEmplyer",
+    element: <DashboardEmployer />,
   },
 ]);
 

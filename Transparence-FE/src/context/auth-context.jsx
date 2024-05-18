@@ -24,6 +24,8 @@ export function AuthProvider({ children }) {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
             role: userDetails.role,
+            walletID: userDetails.walletID,
+            companyName: userDetails.companyName || "",
           });
         } else {
           setUser({
@@ -40,16 +42,31 @@ export function AuthProvider({ children }) {
     return () => unsubscribe();
   }, []);
 
-  const signup = async (email, password, role) => {
+  const signup = async (email, password, role, walletID, companyName = "") => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: email,
-      role: role,
+    const uid = userCredential.user.uid;
+
+    // Add user to the users collection
+    await setDoc(doc(db, "users", uid), {
+      email,
+      role,
+      walletID,
+      companyName: role === "Company" ? companyName : "",
     });
+
+    // If role is Company, add to the companies collection
+    if (role === "Company") {
+      await setDoc(doc(db, "companies", uid), {
+        email,
+        companyName,
+        walletID,
+      });
+    }
+
     return userCredential;
   };
 
