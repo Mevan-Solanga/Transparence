@@ -12,6 +12,7 @@
   "dependencies": {
     "firebase": "^10.12.0",
     "near-api-js": "^4.0.1",
+    "near-sdk-as": "^3.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1"
