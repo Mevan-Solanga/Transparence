@@ -3,7 +3,7 @@ import { useAuth } from "../context/auth-context";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
-
+import "../styles/employee.css";
 const DashboardEmployee = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
@@ -61,8 +61,8 @@ const DashboardEmployee = () => {
 
   return (
     <div>
-      <h1>Dashboard Employee</h1>
       <form onSubmit={handleSubmit}>
+        <h1>Employee Portal</h1>
         <label htmlFor="company">Select Company:</label>
         <select
           id="company"
@@ -78,17 +78,18 @@ const DashboardEmployee = () => {
           ))}
         </select>
         <br />
-        <label htmlFor="message">Message:</label>
+
         <textarea
           id="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          placeholder="Message"
           required
         />
         <br />
         <button type="submit">Send Notification</button>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </form>
-      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
