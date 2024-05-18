@@ -1,6 +1,6 @@
 import { useAuth } from "../context/auth-context";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/signup.css";
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -10,11 +10,15 @@ const Signup = () => {
   const [role, setRole] = useState("");
   const { signup } = useAuth();
 
+  console.log(walletID);
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await signup(email, password, role);
-      return <Navigate to={"/dashboard"} />;
+      await signup(email, password, role, walletID, companyName);
+      navigate("/dashboard");
     } catch (error) {
       console.error("ERROR SIGNING UP");
     }
@@ -41,9 +45,9 @@ const Signup = () => {
         <input
           type="text"
           value={walletID}
-          required
-          placeholder="walletID"
           onChange={(e) => setWalletID(e.target.value)}
+          required
+          placeholder="Wallet ID"
         />
         <select
           value={role}

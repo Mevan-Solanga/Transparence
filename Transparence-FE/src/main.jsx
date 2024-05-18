@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import DashboardEmployee from "./pages/DashboardEmployee";
-import DashboardEmployer from "./pages/DashboardEmployer";
 import { AuthProvider } from "./context/auth-context";
 import PrivateRoutes from "./components/PrivateRoutes";
 

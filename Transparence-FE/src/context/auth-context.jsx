@@ -43,39 +43,57 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signup = async (email, password, role, walletID, companyName = "") => {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const uid = userCredential.user.uid;
-
-    // Add user to the users collection
-    await setDoc(doc(db, "users", uid), {
-      email,
-      role,
-      walletID,
-      companyName: role === "Company" ? companyName : "",
-    });
-
-    // If role is Company, add to the companies collection
-    if (role === "Company") {
-      await setDoc(doc(db, "companies", uid), {
+    try {
+      console.log("Starting signup process...");
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
         email,
-        companyName,
-        walletID,
-      });
-    }
+        password
+      );
+      const uid = userCredential.user.uid;
 
-    return userCredential;
+      console.log("User created:", uid);
+
+      // Add user to the users collection
+      await setDoc(doc(db, "users", uid), {
+        email,
+        role,
+        walletID,
+        companyName: role === "Company" ? companyName : "",
+      });
+      console.log("User document written to users collection");
+
+      // If role is Company, add to the companies collection
+      if (role === "Company") {
+        await setDoc(doc(db, "companies", uid), {
+          companyName,
+        });
+        console.log("User document written to companies collection");
+      }
+
+      return userCredential;
+    } catch (error) {
+      console.error("Error during signup process:", error);
+      throw error;
+    }
   };
 
   const login = async (email, password) => {
-    return await signInWithEmailAndPassword(auth, email, password);
+    try {
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error("Error logging in:", error);
+      throw error;
+    }
   };
 
   const logout = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error logging out:", error);
+      throw error;
+    }
   };
 
   const value = { user, signup, login, logout, loading };
