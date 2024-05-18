@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import DashboardEmployee from "./pages/DashboardEmployee";
 import DashboardEmployer from "./pages/DashboardEmployer";
 import { AuthProvider } from "./context/auth-context";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -17,12 +18,8 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: "/dashboardApplicant",
-    element: <DashboardEmployee />,
-  },
-  {
-    path: "/dashboardEmplyer",
-    element: <DashboardEmployer />,
+    path: "/dashboard",
+    element: <PrivateRoutes />,
   },
 ]);
 

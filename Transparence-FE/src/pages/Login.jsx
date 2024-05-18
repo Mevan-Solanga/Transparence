@@ -1,18 +1,17 @@
 import { useAuth } from "../context/auth-context";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import '../styles/login.css'
+import { Link, Navigate } from "react-router-dom";
+import "../styles/login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await login(email, password);
-      navigate("/dashboard");
+      return <Navigate to={"/dashboard"} />;
     } catch (error) {
       console.error("LOGIN ERROR");
     }

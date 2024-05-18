@@ -1,7 +1,7 @@
 import { useAuth } from "../context/auth-context";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import '../styles/signup.css'
+import { Link } from "react-router-dom";
+import "../styles/signup.css";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,23 +10,20 @@ const Signup = () => {
   const [role, setRole] = useState("");
   const { signup } = useAuth();
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await signup(email, password, role);
-      navigate("/dashboard");
+      return <Navigate to={"/dashboard"} />;
     } catch (error) {
       console.error("ERROR SIGNING UP");
     }
   };
 
   return (
-    <> 
-     
+    <>
       <form onSubmit={handleSubmit}>
-      <h1>Sign Up</h1>
+        <h1>Sign Up</h1>
         <input
           type="email"
           value={email}
@@ -49,15 +46,15 @@ const Signup = () => {
           onChange={(e) => setWalletID(e.target.value)}
         />
         <select
-  value={role}
-  onChange={(e) => setRole(e.target.value)}
-  required
-  style={{ width: 'calc(100% - 22px)' }} // Adjusted width to match other input boxes
->
-  <option value="0">Select Role</option>
-  <option value="Company">Company</option>
-  <option value="Applicant">Applicant</option>
-</select>
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          required
+          style={{ width: "calc(100% - 22px)" }} // Adjusted width to match other input boxes
+        >
+          <option value="0">Select Role</option>
+          <option value="Company">Company</option>
+          <option value="Applicant">Applicant</option>
+        </select>
         {role === "Company" && (
           <input
             type="text"
