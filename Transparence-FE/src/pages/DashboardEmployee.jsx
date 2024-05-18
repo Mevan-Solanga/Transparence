@@ -6,7 +6,7 @@ import { db } from "../utils/firebase";
 
 const DashboardEmployee = () => {
   const { logout, user } = useAuth();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState("");
@@ -29,12 +29,10 @@ const DashboardEmployee = () => {
     fetchCompanies();
   }, []);
 
-  console.log(companies);
-
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/"); // Navigate to the login page
+      navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -48,7 +46,6 @@ const DashboardEmployee = () => {
     }
 
     try {
-      // Send notification to the company
       await addDoc(collection(db, "notifications"), {
         companyId: selectedCompany,
         message,
