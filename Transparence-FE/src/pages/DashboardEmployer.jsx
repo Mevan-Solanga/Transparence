@@ -1,15 +1,15 @@
 import React from "react";
-import { useAuth } from "../context/auth-context"; // Adjust the path as necessary
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useAuth } from "../context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const DashboardApplicant = () => {
   const { logout } = useAuth();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/"); // Navigate to the login page
+      navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
     }

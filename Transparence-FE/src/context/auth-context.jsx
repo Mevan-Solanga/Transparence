@@ -63,12 +63,12 @@ export function AuthProvider({ children }) {
       });
       console.log("User document written to users collection");
 
-      // If role is Company, add companyName to the companies collection with an auto-generated ID
+      // If role is Company, add to the companies collection
       if (role === "Company") {
-        await addDoc(collection(db, "companies"), {
+        await setDoc(doc(db, "companies", uid), {
           companyName,
         });
-        console.log("Company name added to companies collection");
+        console.log("User document written to companies collection");
       }
 
       return userCredential;
