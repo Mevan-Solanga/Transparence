@@ -5,6 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [walletID, setWalletID] = useState("");
   const [role, setRole] = useState("");
   const { signup } = useAuth();
 
@@ -37,11 +39,27 @@ const Signup = () => {
           required
           placeholder="Password"
         />
+        <input
+          type="text"
+          value={walletID}
+          required
+          placeholder="walletID"
+          onChange={(e) => setWalletID(e.target.value)}
+        />
         <select value={role} onChange={(e) => setRole(e.target.value)} required>
           <option value="">Select Role</option>
           <option value="Company">Company</option>
           <option value="Applicant">Applicant</option>
         </select>
+        {role === "Company" && (
+          <input
+            type="text"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            required
+            placeholder="Company Name"
+          />
+        )}
         <button type="submit">Sign Up</button>
       </form>
       <Link to={"/"}>To Login</Link>
