@@ -1,19 +1,26 @@
-import { keyStores } from "near-api-js";
-
-// Check if we are running in a browser environment
-const isBrowser = typeof window !== "undefined";
-
-const keyStore = isBrowser
-  ? new keyStores.BrowserLocalStorageKeyStore()
-  : new keyStores.InMemoryKeyStore();
+import { connect, keyStores, WalletConnection } from 'near-api-js';
 
 const nearConfig = {
-  networkId: "testnet", // or 'mainnet' for production
-  keyStore, // Use the conditional key store
-  nodeUrl: "https://rpc.testnet.near.org", // or 'https://rpc.mainnet.near.org'
-  walletUrl: "https://wallet.testnet.near.org", // or 'https://wallet.mainnet.near.org'
-  helperUrl: "https://helper.testnet.near.org", // or 'https://helper.mainnet.near.org'
-  explorerUrl: "https://explorer.testnet.near.org", // or 'https://explorer.mainnet.near.org'
+  networkId: 'testnet',
+  keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+  nodeUrl: 'https://rpc.testnet.near.org',
+  walletUrl: 'https://wallet.testnet.near.org',
+  helperUrl: 'https://helper.testnet.near.org',
+  explorerUrl: 'https://explorer.testnet.near.org',
 };
 
 export default nearConfig;
+
+export async function initContract() {
+  const near = await connect(nearConfig);
+  const walletConnection = new WalletConnection(near);
+  
+  const accountId = walletConnection.getAccountId();
+  
+  const contract = new near.Contract(walletConnection.account(), 'my-new-account.samudraperera.testnet', {
+    viewMethods: ['getVerificationStatus'],
+    changeMethods: ['createVerificationRequest', 'confirmVerificationRequest'],
+  });
+
+  return { walletConnection, contract, accountId };
+}
