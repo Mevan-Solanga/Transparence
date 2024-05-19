@@ -1,0 +1,8 @@
+{
+    "extends": "near-sdk-as/asconfig.json",
+    "include": ["assembly/**/*.ts"],
+    "compilerOptions": {
+      "outDir": "build/release"
+    }
+  }
+  

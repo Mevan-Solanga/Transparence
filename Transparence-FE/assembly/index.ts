@@ -42,10 +42,7 @@ export function confirmVerificationRequest(applicant: string): void {
 }
 
 // Function to get the verification status
-export function getVerificationStatus(
-  applicant: string,
-  employer: string
-): bool {
+export function getVerificationStatus(applicant: string, employer: string): bool {
   const requestId = REQUEST_PREFIX + applicant + "-" + employer;
   const request = storage.get<Request>(requestId);
   return request != null ? request.verified : false;
