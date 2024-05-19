@@ -11,12 +11,12 @@ export async function initializeNear() {
   accountId = near.accountId;
 }
 
-export async function createVerificationRequest(employer) {
-  await contract.createVerificationRequest({ employer });
+export async function createVerificationRequest(applicant, employer) {
+  await contract.createVerificationRequest({ applicant, employer });
 }
 
-export async function confirmVerificationRequest(applicant) {
-  await contract.confirmVerificationRequest({ applicant });
+export async function confirmVerificationRequest(applicant, employer) {
+  await contract.confirmVerificationRequest({ applicant, employer });
 }
 
 export async function getVerificationStatus(applicant, employer) {
