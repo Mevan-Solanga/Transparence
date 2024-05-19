@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth-context";
-import { useNavigate } from "react-router-dom";
-import { collection, getDocs, addDoc, doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import "../styles/employee.css";
-
-// Import NEAR functions
-import { initializeNear, createVerificationRequest, getAccountId } from '../api/near';
-
 const DashboardEmployee = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
@@ -15,16 +11,6 @@ const DashboardEmployee = () => {
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState("");
   const [message, setMessage] = useState("");
-  const [contractInitialized, setContractInitialized] = useState(false);
-
-  useEffect(() => {
-    const initialize = async () => {
-      await initializeNear();
-      setContractInitialized(true);
-    };
-
-    initialize();
-  }, []);
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -60,33 +46,10 @@ const DashboardEmployee = () => {
     }
 
     try {
-      // Fetch employee wallet ID from the user's document
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userData = userDoc.data();
-      const employeeWalletId = userData.walletID;
-
-      // Fetch company wallet ID from the selected company document
-      const companyDoc = await getDoc(doc(db, "companies", selectedCompany));
-      const companyData = companyDoc.data();
-      const companyWalletId = companyData.walletID;
-
-      // Create a verification request on the blockchain
-      if (contractInitialized) {
-        await createVerificationRequest(employeeWalletId, companyWalletId);
-        console.log(`Verification request created for company: ${companyWalletId}`);
-      } else {
-        console.error("Contract not initialized");
-        alert("Failed to create verification request. Contract not initialized.");
-        return;
-      }
-
-      // Add the notification to Firestore
       await addDoc(collection(db, "notifications"), {
         companyId: selectedCompany,
-        companyWalletId: companyWalletId,
         message,
         from: user.uid,
-        employeeWalletId: employeeWalletId,
         createdAt: new Date(),
       });
       alert("Notification sent successfully.");
@@ -125,7 +88,9 @@ const DashboardEmployee = () => {
         />
         <br />
         <button type="submit">Send Notification</button>
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </form>
     </div>
   );
