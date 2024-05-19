@@ -12,29 +12,44 @@ import {
 import { db } from "../utils/firebase";
 import "../styles/employeer.css";
 
+// Import NEAR functions
+import { initializeNear, confirmVerificationRequest, getAccountId } from '../api/near';
+
 const EmployerDashboard = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [companyName, setCompanyName] = useState("");
+  const [employerWalletId, setEmployerWalletId] = useState("");
+  const [contractInitialized, setContractInitialized] = useState(false);
 
   useEffect(() => {
-    const fetchCompanyName = async () => {
+    const initialize = async () => {
+      await initializeNear();
+      setContractInitialized(true);
+    };
+
+    initialize();
+  }, []);
+
+  useEffect(() => {
+    const fetchCompanyNameAndWalletId = async () => {
       try {
-        // Fetch the employer's company name from the user's document
+        // Fetch the employer's company name and wallet ID from the user's document
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userData = userDoc.data();
-        if (userData && userData.companyName) {
+        if (userData) {
           setCompanyName(userData.companyName);
+          setEmployerWalletId(userData.walletID);
         } else {
-          console.error("Company name not found for the user");
+          console.error("User data not found");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
-    fetchCompanyName();
+    fetchCompanyNameAndWalletId();
   }, [user.uid]);
 
   useEffect(() => {
@@ -74,9 +89,17 @@ const EmployerDashboard = () => {
     }
   };
 
-  const handleAction = (notificationId) => {
-    // Placeholder for future action logic
-    console.log(`Action triggered for notification ID: ${notificationId}`);
+  const handleAction = async (employeeWalletId) => {
+    try {
+      if (contractInitialized) {
+        await confirmVerificationRequest(employeeWalletId, employerWalletId);
+        console.log(`Verification request confirmed for applicant: ${employeeWalletId}`);
+      } else {
+        console.error("Contract not initialized");
+      }
+    } catch (error) {
+      console.error("Error confirming verification request:", error);
+    }
   };
 
   return (
@@ -88,7 +111,7 @@ const EmployerDashboard = () => {
           {notifications.map((notification) => (
             <div key={notification.id} className="notification-card">
               <p className="message">{notification.message}</p>
-              <button className="action-button" onClick={() => handleAction(notification.id)}>
+              <button className="action-button" onClick={() => handleAction(notification.employeeWalletId)}>
                 Take Action
               </button>
             </div>
